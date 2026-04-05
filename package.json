@@ -1,28 +1,42 @@
 {
-  "name": "eky-chat-ai",
-  "module": "index.ts",
-  "type": "module",
+  "name": "tauri-nextjs-template",
   "private": true,
-  "workspaces": ["apps/*", "packages/*"],
-  "devDependencies": {
-    "@types/bun": "latest",
-    "sharp": "^0.34.5",
-    "turbo": "^2.3.0"
-  },
-  "peerDependencies": {
-    "typescript": "^5.9.3"
-  },
+  "version": "0.3.0",
+  "type": "module",
+  "packageManager": "bun@1.2.0",
   "scripts": {
-    "dev:web": "bun --filter @eky/web dev",
-    "dev:native": "bun --filter @eky/native tauri dev",
-    "dev:android": "bun --filter @eky/native tauri android dev",
-    "dev:ios": "bun --filter @eky/native tauri ios dev",
-    "build:web": "bun --filter @eky/web build",
-    "build:native": "bun --filter @eky/native tauri build",
-    "lint": "bun --filter '*' lint",
-    "format": "bun --filter '*' format"
+    "dev:next": "next dev --turbopack",
+    "build:next": "next build",
+    "tauri": "tauri",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
+    "dev": "tauri dev",
+    "build": "tauri build"
   },
   "dependencies": {
-    "@tauri-apps/plugin-sql": "^2.4.0"
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/material": "^7.3.9",
+    "@mui/icons-material": "^7.3.9",
+    "@tauri-apps/api": "^2.10.1",
+    "@tauri-apps/plugin-opener": "^2.5.3",
+    "next": "^16.2.1",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^25.5.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.1",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "prettier": "^3.7.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.58.0"
   }
 }

@@ -1,7 +1,7 @@
 Eky Chat AI
 
 1. Project Overview
-Eky Chat Me is a cross-platform, frontend-only AI chat application designed to interface with multiple AI models and providers. Users configure their own API keys and endpoints to interact with various large language models through a unified, responsive interface. The application operates entirely on the client side, utilizing local databases for authentication, configuration, and chat session persistence.
+Eky Chat AI is a cross-platform, frontend-only AI chat application designed to interface with multiple AI models and providers. Users configure their own API keys and endpoints to interact with various large language models through a unified, responsive interface. The application operates entirely on the client side, utilizing local databases for authentication, configuration, and chat session persistence.
 
 2. Key Features
 - Cross-platform: Web, Desktop (macOS), Mobile (iOS/Android)
@@ -46,15 +46,8 @@ Detailed Architecture
 - Dependency Injection: ViewModels receive data repositories via constructor or factory functions, enabling easy testing and swapping of implementations (e.g., local vs remote).
 - Cross-Platform Adaptation: The same shared code is used by Next.js (web) and Tauri (native). Platform-specific code is isolated using dynamic imports and environment flags.
 
-## File: README.md (updated section)
-
-Add the following content to README.md under a new heading "Application Pages & UI Layout".
-
----
-
 Application Pages & UI Layout
-
-The user interface of Eky Chat Me is heavily inspired by Open WebUI and ChatGPT, providing a familiar yet efficient experience for managing multiple conversations and AI providers.
+The user interface of Eky Chat AI is heavily inspired by Open WebUI and ChatGPT UI.
 
 1. Homepage (Chat Interface)
    - Central chat area with message bubbles (user and assistant).
@@ -76,7 +69,7 @@ The user interface of Eky Chat Me is heavily inspired by Open WebUI and ChatGPT,
    - Collapse/expand sidebar on desktop.
 
 3. Settings Page
-   - Accessible from sidebar (gear icon). Opens as a modal or separate page.
+   - Accessible from sidebar (gear icon). Opens as a modal. button is in bottom right of sidebar
    - Tabs or sections:
      a) General Settings
         - Theme selection (light, dark, system).
@@ -110,5 +103,3 @@ The user interface of Eky Chat Me is heavily inspired by Open WebUI and ChatGPT,
    - Web: full window, sidebar resizable.
    - Desktop (Tauri): same as web, with native window controls.
    - Mobile (Tauri): bottom navigation bar (optional) or sidebar as drawer; input field adjusted for virtual keyboard.
-
-The layout and interactions closely follow the patterns of Open WebUI (github.com/open-webui/open-webui) and ChatGPT, ensuring users feel immediately productive.
