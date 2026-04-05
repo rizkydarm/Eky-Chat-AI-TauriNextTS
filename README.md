@@ -46,3 +46,69 @@ Detailed Architecture
 - Dependency Injection: ViewModels receive data repositories via constructor or factory functions, enabling easy testing and swapping of implementations (e.g., local vs remote).
 - Cross-Platform Adaptation: The same shared code is used by Next.js (web) and Tauri (native). Platform-specific code is isolated using dynamic imports and environment flags.
 
+## File: README.md (updated section)
+
+Add the following content to README.md under a new heading "Application Pages & UI Layout".
+
+---
+
+Application Pages & UI Layout
+
+The user interface of Eky Chat Me is heavily inspired by Open WebUI and ChatGPT, providing a familiar yet efficient experience for managing multiple conversations and AI providers.
+
+1. Homepage (Chat Interface)
+   - Central chat area with message bubbles (user and assistant).
+   - Input field at the bottom with support for multi-line text, send button, and optional stop generation button.
+   - Streaming responses displayed in real-time.
+   - Top bar shows current session title and a button to open sidebar (on mobile) or settings.
+   - Empty state: welcome message and example prompts.
+   - Markdown rendering for assistant messages (code blocks, tables, lists).
+   - Copy message content, regenerate response, delete message options per bubble.
+
+2. Sidebar (Session Management & Navigation)
+   - Persistent on desktop (left side), slide-out drawer on mobile.
+   - New Chat button at the top.
+   - List of existing chat sessions grouped by date (Today, Yesterday, Previous 7 days, Older).
+   - Each session item shows title (auto-generated from first user message), preview of last message, and timestamp.
+   - Context menu (or icons) on each session: rename, delete, duplicate.
+   - Drag-and-drop reordering of sessions (optional).
+   - At the bottom of sidebar: Settings button and Theme toggle (light/dark).
+   - Collapse/expand sidebar on desktop.
+
+3. Settings Page
+   - Accessible from sidebar (gear icon). Opens as a modal or separate page.
+   - Tabs or sections:
+     a) General Settings
+        - Theme selection (light, dark, system).
+        - Language (if multi-language planned).
+        - Font size (slider).
+     b) AI Provider Configuration
+        - List of providers (OpenAI, Anthropic, Groq, Ollama, custom OpenAI-compatible).
+        - For each provider: API endpoint URL, API key (masked input), model name (dropdown or text).
+        - Test connection button.
+        - Default provider and model selection for new chats.
+     c) Chat Settings
+        - Default system prompt (text area).
+        - Temperature, max tokens, top_p (advanced expandable).
+        - Streaming enabled/disabled.
+     d) Data Management
+        - Export all sessions (JSON or SQLite export).
+        - Import sessions (from JSON).
+        - Clear all history (with confirmation).
+        - Database location (display only, for native apps).
+     e) About
+        - App version (from Tauri or package.json).
+        - Link to repository.
+
+4. Navigation Flow
+   - Clicking "New Chat" creates a session and focuses on empty input.
+   - Clicking an existing session loads its full message history into the chat area.
+   - Deleting a session removes it from sidebar and clears current chat if active.
+   - Settings changes are saved instantly to local database (or via Tauri store plugin) and applied without restart.
+
+5. Responsive Behavior
+   - Web: full window, sidebar resizable.
+   - Desktop (Tauri): same as web, with native window controls.
+   - Mobile (Tauri): bottom navigation bar (optional) or sidebar as drawer; input field adjusted for virtual keyboard.
+
+The layout and interactions closely follow the patterns of Open WebUI (github.com/open-webui/open-webui) and ChatGPT, ensuring users feel immediately productive.
