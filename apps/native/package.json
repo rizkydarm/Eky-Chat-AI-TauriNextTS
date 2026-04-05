@@ -1,0 +1,36 @@
+{
+  "name": "@eky/native",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@eky/core": "workspace:*",
+    "@eky/db": "workspace:*",
+    "@eky/types": "workspace:*",
+    "@eky/ui": "workspace:*",
+    "@eky/utils": "workspace:*",
+    "@mui/material": "^7.3.9",
+    "@mui/icons-material": "^7.3.9",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@tauri-apps/api": "^2.5.0",
+    "@tauri-apps/plugin-sql": "^2.2.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.5.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^4.4.1",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.3"
+  }
+}

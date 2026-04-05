@@ -1,0 +1,20 @@
+{
+  "name": "@eky/db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema": "./src/schema.ts",
+    "./queries": "./src/queries.ts",
+    "./web": "./src/web.ts",
+    "./native": "./src/native.ts"
+  },
+  "dependencies": {
+    "@eky/types": "workspace:*",
+    "@eky/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

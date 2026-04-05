@@ -1,0 +1,16 @@
+{
+  "name": "@eky/utils",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./date": "./src/date.ts",
+    "./id": "./src/id.ts",
+    "./storage": "./src/storage.ts",
+    "./validation": "./src/validation.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

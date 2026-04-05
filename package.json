@@ -1,0 +1,25 @@
+{
+  "name": "eky-chat-ai",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "workspaces": ["apps/*", "packages/*"],
+  "devDependencies": {
+    "@types/bun": "latest",
+    "sharp": "^0.34.5",
+    "turbo": "^2.3.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  },
+  "scripts": {
+    "dev:web": "bun --filter @eky/web dev",
+    "dev:native": "bun --filter @eky/native tauri dev",
+    "dev:android": "bun --filter @eky/native tauri android dev",
+    "dev:ios": "bun --filter @eky/native tauri ios dev",
+    "build:web": "bun --filter @eky/web build",
+    "build:native": "bun --filter @eky/native tauri build",
+    "lint": "bun --filter '*' lint",
+    "format": "bun --filter '*' format"
+  }
+}

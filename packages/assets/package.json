@@ -1,0 +1,9 @@
+{
+  "name": "@eky/assets",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./icons/*": "./icons/*",
+    "./images/*": "./images/*"
+  }
+}

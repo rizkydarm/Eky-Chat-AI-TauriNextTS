@@ -1,0 +1,123 @@
+# dependencies (bun install)
+node_modules/
+.pnpm-store/
+
+# build output
+out/
+dist/
+*.tgz
+build/
+
+
+# code coverage
+coverage
+*.lcov
+
+# logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# dotenv environment variable files
+.env
+.env.*
+!.env.example
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# caches
+.eslintcache
+.stylelintcache
+.cache/
+*.tsbuildinfo
+.parcel-cache/
+.npm
+.bun
+
+# IntelliJ based IDEs
+.idea
+
+# Finder (MacOS) folder config
+.DS_Store
+
+# Tauri
+apps/native/src-tauri/target/
+apps/native/src-tauri/target/debug/
+apps/native/src-tauri/target/release/
+apps/native/src-tauri/target/.rustc_info.json
+apps/native/src-tauri/target/CACHEDIR.TAG
+gen/
+apps/native/src-tauri/Cargo.lock
+*.mobileprovision
+*.p12
+*.keychain
+*.keystore
+
+# Next.js
+.next/
+next-env.d.ts
+
+# testing
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+coverage/
+.nyc_output/
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# misc
+*.local
+.eslintcache
+.stylelintcache
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+*.sublime-project
+
+# Debug
+.pnpm-debug.log*
+lerna-debug.log*
+
+# Turborepo
+.turbo/
+
+# Storybook
+storybook-static/
+
+# Temporary files
+*.tmp
+*.temp
+*.pid
+*.seed
+*.pid.lock
+
