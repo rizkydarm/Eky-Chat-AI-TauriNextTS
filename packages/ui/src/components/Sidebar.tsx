@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import {
   Box,
   IconButton,
@@ -9,6 +9,11 @@ import {
   TextField,
   Typography,
   Tooltip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
 } from '@mui/material'
 import {
   Menu as MenuIcon,
@@ -25,7 +30,10 @@ export function Sidebar() {
     sidebarExpanded,
     isEditingId,
     editText,
+    isAddDialogOpen,
     addConversation,
+    confirmAddConversation,
+    closeAddDialog,
     deleteConversation,
     selectConversation,
     toggleSidebar,
@@ -33,9 +41,15 @@ export function Sidebar() {
     cancelEditing,
     finishEditing,
     setEditText,
+    init,
   } = useConversationStore()
 
+  const [newChatName, setNewChatName] = useState('')
   const editInputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    init()
+  }, [init])
 
   useEffect(() => {
     if (isEditingId && editInputRef.current) {
@@ -52,61 +66,145 @@ export function Sidebar() {
     }
   }, [finishEditing, cancelEditing])
 
+  const handleConfirmAdd = () => {
+    confirmAddConversation(newChatName)
+    setNewChatName('')
+  }
+
+  const handleAddDialogClose = () => {
+    closeAddDialog()
+    setNewChatName('')
+  }
+
   return (
-    <Box sx={{
-      width: sidebarExpanded ? 280 : 64,
-      height: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      borderRight: 1,
-      borderColor: 'divider',
-      bgcolor: 'background.paper',
-      transition: 'width 0.2s ease',
-      overflow: 'hidden',
-    }}>
+    <>
       <Box sx={{
-        p: 2,
+        width: sidebarExpanded ? 280 : 64,
+        height: '100vh',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: sidebarExpanded ? 'space-between' : 'center',
-        minHeight: 64,
-        borderBottom: 1,
+        flexDirection: 'column',
+        borderRight: 1,
         borderColor: 'divider',
+        bgcolor: 'background.paper',
+        transition: 'width 0.2s ease',
+        overflow: 'hidden',
       }}>
-        {sidebarExpanded && (
-          <Typography variant="h6" fontWeight={600}>
-            Eky Chat
-          </Typography>
-        )}
-        <Box sx={{ display: 'flex', gap: 0.5 }}>
-          <Tooltip title="New Chat">
-            <IconButton size="small" onClick={addConversation}>
-              <AddIcon fontSize="small" />
+        <Box sx={{
+          p: 2,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: sidebarExpanded ? 'space-between' : 'center',
+          minHeight: 64,
+          borderBottom: 1,
+          borderColor: 'divider',
+        }}>
+          {sidebarExpanded && (
+            <Typography variant="h6" fontWeight={60}>
+              Eky Chat
+            </Typography>
+          )}
+          <Box sx={{ display: 'flex', gap: 0.5 }}>
+            <IconButton size="small" onClick={toggleSidebar}>
+              {sidebarExpanded ? <ChevronLeftIcon fontSize="small" /> : <MenuIcon fontSize="small" />}
             </IconButton>
-          </Tooltip>
-          <IconButton size="small" onClick={toggleSidebar}>
-            {sidebarExpanded ? <ChevronLeftIcon fontSize="small" /> : <MenuIcon fontSize="small" />}
-          </IconButton>
+          </Box>
         </Box>
+
+        <List sx={{ flex: 1, overflow: 'auto', p: 0.5 }}>
+          {conversations.map(conversation => (
+            <ListItem key={conversation.id} disablePadding secondaryAction={
+              sidebarExpanded && isEditingId !== conversation.id ? (
+                <IconButton
+                  size="small"
+                  edge="end"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    deleteConversation(conversation.id)
+                  }}
+                  sx={{ opacity: 0, '&:hover': { opacity: 1 } }}
+                >
+                  <DeleteIcon fontSize="small" />
+                </IconButton>
+              ) : null
+            }
+              sx={{
+                mb: 0.5,
+                borderRadius: 1,
+                '&:hover .MuiIconButton-root': { opacity: 1 },
+              }}
+            >
+              {isEditingId === conversation.id ? (
+                <TextField
+                  inputRef={editInputRef}
+                  fullWidth
+                  size="small"
+                  value={editText}
+                  onChange={(e) => setEditText((e.target as HTMLInputElement).value)}
+                  onBlur={() => finishEditing(conversation.id)}
+                  onKeyDown={(e) => handleKeyDown(e, conversation.id)}
+                  sx={{ mx: 1 }}
+                />
+              ) : (
+                <ListItemButton
+                  selected={selectedConversationId === conversation.id}
+                  onClick={() => selectConversation(conversation.id)}
+                  onDoubleClick={(e) => {
+                    e.stopPropagation()
+                    startEditing(conversation.id, conversation.title)
+                  }}
+                  sx={{ borderRadius: 1, pr: sidebarExpanded ? 5 : 1 }}
+                >
+                  <ListItemText
+                    primary={conversation.title}
+                    primaryTypographyProps={{
+                      noWrap: true,
+                      fontSize: 14,
+                    }}
+                  />
+                </ListItemButton>
+              )}
+            </ListItem>
+          ))}
+
+          <ListItem disablePadding sx={{ mb: 0.5, borderRadius: 1 }}>
+            <ListItemButton
+              onClick={addConversation}
+              sx={{ borderRadius: 1 }}
+            >
+              <AddIcon fontSize="small" sx={{ mr: 1 }} />
+              {sidebarExpanded && (
+                <ListItemText
+                  primary="+ Add"
+                  primaryTypographyProps={{ fontSize: 14 }}
+                />
+              )}
+            </ListItemButton>
+          </ListItem>
+        </List>
       </Box>
 
-      <List sx={{ flex: 1, overflow: 'auto', p: 0.5 }}>
-        {conversations.map(conversation => (
-          <ListItem key={conversation.id} disablePadding secondaryAction={
-            sidebarExpanded && isEditingId !== conversation.id ? (
-              <IconButton
-                size="small"
-                edge="end"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  deleteConversation(conversation.id)
-                }}
-                sx={{ opacity: 0, '&:hover': { opacity: 1 } }}
-              >
-                <DeleteIcon fontSize="small" />
-              </IconButton>
-            ) : null
-          }
+      <Dialog open={isAddDialogOpen} onClose={handleAddDialogClose}>
+        <DialogTitle>New Chat</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Chat Name"
+            fullWidth
+            variant="standard"
+            value={newChatName}
+            onChange={(e) => setNewChatName(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleConfirmAdd()}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleAddDialogClose}>Cancel</Button>
+          <Button onClick={handleConfirmAdd}>Create</Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  )
+}
             sx={{
               mb: 0.5,
               borderRadius: 1,
@@ -145,6 +243,21 @@ export function Sidebar() {
             )}
           </ListItem>
         ))}
+
+        <ListItem disablePadding sx={{ mb: 0.5, borderRadius: 1 }}>
+          <ListItemButton
+            onClick={addConversation}
+            sx={{ borderRadius: 1 }}
+          >
+            <AddIcon fontSize="small" sx={{ mr: 1 }} />
+            {sidebarExpanded && (
+              <ListItemText
+                primary="+ Add"
+                primaryTypographyProps={{ fontSize: 14 }}
+              />
+            )}
+          </ListItemButton>
+        </ListItem>
       </List>
     </Box>
   )

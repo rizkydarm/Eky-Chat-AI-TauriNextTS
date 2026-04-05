@@ -1,5 +1,12 @@
 import { create } from 'zustand'
 import type { Conversation } from '@eky/types'
+import { 
+  fetchAllConversations, 
+  insertConversation, 
+  updateConversationTitle as updateDbTitle,
+  deleteConversationById,
+  initDatabase
+} from '../db/sqlite'
 
 interface ConversationState {
   conversations: Conversation[]
@@ -7,10 +14,16 @@ interface ConversationState {
   sidebarExpanded: boolean
   isEditingId: string | null
   editText: string
+  isAddDialogOpen: boolean
+  isLoading: boolean
 
+  loadConversations: () => Promise<void>
+  init: () => Promise<void>
   addConversation: () => void
-  deleteConversation: (id: string) => void
-  updateConversationTitle: (id: string, title: string) => void
+  confirmAddConversation: (title: string) => Promise<void>
+  closeAddDialog: () => void
+  deleteConversation: (id: string) => Promise<void>
+  updateConversationTitle: (id: string, title: string) => Promise<void>
   selectConversation: (id: string | null) => void
   toggleSidebar: () => void
   setSidebarExpanded: (expanded: boolean) => void
@@ -21,31 +34,54 @@ interface ConversationState {
 }
 
 export const useConversationStore = create<ConversationState>((set, get) => ({
-  conversations: [
-    { id: '1', title: 'Welcome Chat', messages: [], createdAt: new Date(), updatedAt: new Date() },
-    { id: '2', title: 'React 19 Features', messages: [], createdAt: new Date(), updatedAt: new Date() },
-    { id: '3', title: 'Tauri v2 Guide', messages: [], createdAt: new Date(), updatedAt: new Date() },
-  ],
+  conversations: [],
   selectedConversationId: null,
   sidebarExpanded: true,
   isEditingId: null,
   editText: '',
+  isAddDialogOpen: false,
+  isLoading: false,
+
+  init: async () => {
+    set({ isLoading: true })
+    await initDatabase()
+    await get().loadConversations()
+    set({ isLoading: false })
+  },
+
+  loadConversations: async () => {
+    const conversations = await fetchAllConversations()
+    set({ conversations })
+  },
 
   addConversation: () => {
+    set({ isAddDialogOpen: true })
+  },
+
+  confirmAddConversation: async (title: string) => {
     const newConversation: Conversation = {
-      id: Date.now().toString(),
-      title: 'New Chat',
+      id: crypto.randomUUID(),
+      title: title.trim() || 'New Chat',
       messages: [],
       createdAt: new Date(),
       updatedAt: new Date(),
     }
+
+    await insertConversation(newConversation)
+    
     set(state => ({
       conversations: [newConversation, ...state.conversations],
-      selectedConversationId: newConversation.id
+      selectedConversationId: newConversation.id,
+      isAddDialogOpen: false
     }))
   },
 
-  deleteConversation: (id: string) => {
+  closeAddDialog: () => {
+    set({ isAddDialogOpen: false })
+  },
+
+  deleteConversation: async (id: string) => {
+    await deleteConversationById(id)
     const state = get()
     set({
       conversations: state.conversations.filter(c => c.id !== id),
@@ -53,7 +89,8 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
     })
   },
 
-  updateConversationTitle: (id: string, title: string) => {
+  updateConversationTitle: async (id: string, title: string) => {
+    await updateDbTitle(id, title)
     set(state => ({
       conversations: state.conversations.map(c =>
         c.id === id ? { ...c, title, updatedAt: new Date() } : c
@@ -71,10 +108,10 @@ export const useConversationStore = create<ConversationState>((set, get) => ({
 
   cancelEditing: () => set({ isEditingId: null, editText: '' }),
 
-  finishEditing: (id: string) => {
+  finishEditing: async (id: string) => {
     const state = get()
     if (state.editText.trim()) {
-      state.updateConversationTitle(id, state.editText.trim())
+      await state.updateConversationTitle(id, state.editText.trim())
     }
     set({ isEditingId: null, editText: '' })
   },

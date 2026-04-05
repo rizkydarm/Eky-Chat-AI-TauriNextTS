@@ -21,5 +21,8 @@
     "build:native": "bun --filter @eky/native tauri build",
     "lint": "bun --filter '*' lint",
     "format": "bun --filter '*' format"
+  },
+  "dependencies": {
+    "@tauri-apps/plugin-sql": "^2.4.0"
   }
 }
