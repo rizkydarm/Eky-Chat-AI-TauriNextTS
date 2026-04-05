@@ -97,11 +97,12 @@ export function Sidebar() {
           borderBottom: 1,
           borderColor: 'divider',
         }}>
-          {sidebarExpanded && (
+          {/* {sidebarExpanded && (
             <Typography variant="h6" fontWeight={600}>
               Eky Chat
             </Typography>
-          )}
+          )} */}
+          <Box sx={{ flex: 1 }} />
           <IconButton size="small" onClick={toggleSidebar}>
             {sidebarExpanded ? <ChevronLeftIcon fontSize="small" /> : <MenuIcon fontSize="small" />}
           </IconButton>
@@ -171,7 +172,7 @@ export function Sidebar() {
               <AddIcon fontSize="small" sx={{ mr: 1 }} />
               {sidebarExpanded && (
                 <ListItemText
-                  primary="+ Add"
+                  primary="Add"
                   primaryTypographyProps={{ fontSize: 14 }}
                 />
               )}

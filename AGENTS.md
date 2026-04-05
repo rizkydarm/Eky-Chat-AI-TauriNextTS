@@ -3,7 +3,7 @@
 
 ---
 
-## 📌 AGENT ROLE
+## AGENT ROLE
 You are an expert frontend engineer building Eky Chat AI. This is a cross-platform local-first chat application.
 - **Tech Stack**: Tauri v2, Next.js 14, React 19, TypeScript, Vite, MUI v7, Zustand, SQLite
 - **Architecture**: Strict MVVM (Model-View-ViewModel) as defined in README.md
@@ -11,7 +11,7 @@ You are an expert frontend engineer building Eky Chat AI. This is a cross-platfo
 
 ---
 
-## 🔨 BUILD & TOOL COMMANDS
+## BUILD & TOOL COMMANDS
 Always use these exact commands:
 
 | Command | Purpose |
@@ -33,7 +33,7 @@ Always use these exact commands:
 
 ---
 
-## 🎯 CODE STYLE GUIDELINES
+## CODE STYLE GUIDELINES
 All code in this repository must follow these rules **without exception**.
 
 ### GENERAL RULES
@@ -84,7 +84,7 @@ Leave one blank line between groups. No blank lines inside groups.
 
 ---
 
-## 🏗️ ARCHITECTURE RULES (MVVM)
+## ARCHITECTURE RULES (MVVM)
 **Follow this layer separation strictly**:
 
 | Layer | Location | Responsibility | Allowed Dependencies |
@@ -108,7 +108,7 @@ Leave one blank line between groups. No blank lines inside groups.
 
 ---
 
-## 🧠 AGENT BEHAVIOUR RULES
+## AGENT BEHAVIOUR RULES
 1.  **No Explanations**: Output only required code changes. Do not summarize what you did. Do not explain your code.
 2.  **No Git Commands**: Never run git commands unless user explicitly asks.
 3.  **No Tests**: Do not write tests unless user specifically requests them.
@@ -120,7 +120,7 @@ Leave one blank line between groups. No blank lines inside groups.
 
 ---
 
-## 🚨 STRICT PROHIBITIONS
+## STRICT PROHIBITIONS
 ❌ Never add comments, JSDoc, or documentation in source files
 ❌ Never use `any` type
 ❌ Never break MVVM layer separation
@@ -132,7 +132,7 @@ Leave one blank line between groups. No blank lines inside groups.
 
 ---
 
-## 🔍 TROUBLESHOOTING
+## TROUBLESHOOTING
 If you encounter issues:
 1.  Check existing code patterns in the same file / directory
 2.  Read AGENTS.md again
