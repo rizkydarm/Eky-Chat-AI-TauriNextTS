@@ -19,20 +19,6 @@ Component Reusability
 - Example: `Button.tsx` that wraps MuiButton with consistent sizing and variant.
 - Do not duplicate styling logic across pages.
 
-Theme Configuration
-
-```ts
-// shared/themes/theme.ts
-import { createTheme } from "@mui/material/styles";
-
-export const lightTheme = createTheme({
-  palette: { mode: "light", primary: { main: "#1976d2" } },
-});
-export const darkTheme = createTheme({
-  palette: { mode: "dark", primary: { main: "#90caf9" } },
-});
-```
-
 Error Handling with Alerts
 
 - Use MUI's Snackbar or Alert component for user-facing errors.
@@ -70,7 +56,6 @@ Dark/Light Theme Switching
 Example Shared Component
 
 ```tsx
-// shared/view/ui/PageContainer.tsx
 import { Container, ContainerProps } from "@mui/material";
 
 export const PageContainer = ({ children, ...props }: ContainerProps) => (
@@ -79,3 +64,80 @@ export const PageContainer = ({ children, ...props }: ContainerProps) => (
   </Container>
 );
 ```
+
+## File: ui-guidelines.md (additional section for TSX code style)
+
+Insert the following content into the ui-guidelines.md file, under a new subsection "TSX Code Formatting Rules".
+
+TSX Code Formatting Rules
+
+Vertical properties for JSX elements with more than one prop
+
+When a JSX element has more than one property, each property MUST be placed on its own line, indented one level. The closing bracket of the opening tag and the children (if any) follow on a new line.
+
+Correct example:
+```tsx
+<IconButton
+  color="inherit"
+  onClick={toggleDrawer}
+  edge="start"
+  sx={{ mr: 2 }}
+>
+  <MenuIcon />
+</IconButton>
+```
+
+Incorrect example (single line with multiple props):
+```tsx
+<IconButton color="inherit" onClick={toggleDrawer} edge="start" sx={{ mr: 2 }}>
+  <MenuIcon />
+</IconButton>
+```
+
+Exception for a single property
+
+If the element has exactly ONE property, it MAY remain on the same line as the opening tag.
+
+Example:
+```tsx
+<Container maxWidth="lg">
+  {children}
+</Container>
+```
+
+Self-closing elements with multiple props
+
+Apply the same rule: each prop on its own line, with the self-closing bracket on the last line.
+
+Example:
+```tsx
+<TextField
+  label="Email"
+  type="email"
+  value={email}
+  onChange={handleChange}
+  fullWidth
+/>
+```
+
+Props that are themselves JSX or objects
+
+For complex prop values (e.g., `sx` with multiple rules, `style` objects), break the inner value into multiple lines as well.
+
+Example:
+```tsx
+<Box
+  sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 2,
+    p: 3
+  }}
+>
+  Content
+</Box>
+```
+
+Enforcement
+
+This rule applies to all TSX/JSX files in the project. The project's Prettier configuration should be set to `printWidth: 80` and `jsxBracketSameLine: false` to encourage vertical formatting. Manual review during code generation must follow this style to keep diffs clean and code readable.

@@ -1,12 +1,15 @@
 "use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { useCallback, useState, useEffect } from "react";
+
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
+
 import { ThemeToggle } from "@/view/components/theme-toggle";
 
 export default function Home() {
@@ -81,9 +84,11 @@ export default function Home() {
           </Box>
           <Box component="li">Save and see your changes instantly.</Box>
         </Box>
-
         <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-          <Button variant="outlined" onClick={greet}>
+          <Button
+            variant="outlined"
+            onClick={greet}
+          >
             Call &quot;greet&quot; from Rust
           </Button>
           <Typography sx={{ wordBreak: "break-word", maxWidth: 448 }}>
@@ -91,8 +96,16 @@ export default function Home() {
           </Typography>
         </Box>
       </Box>
-      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-        <Alert severity="warning" onClose={() => setSnackbarOpen(false)}>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={() => setSnackbarOpen(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          severity="warning"
+          onClose={() => setSnackbarOpen(false)}
+        >
           {snackbarMessage}
         </Alert>
       </Snackbar>
@@ -112,7 +125,15 @@ export default function Home() {
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
-          startIcon={<Image aria-hidden src="/file.svg" alt="File icon" width={16} height={16} />}
+          startIcon={
+            <Image
+              aria-hidden
+              src="/file.svg"
+              alt="File icon"
+              width={16}
+              height={16}
+            />
+          }
         >
           Learn
         </Button>
@@ -130,7 +151,15 @@ export default function Home() {
         <Button
           component={Link}
           href="/chat"
-          startIcon={<Image aria-hidden src="/globe.svg" alt="Chat icon" width={16} height={16} />}
+          startIcon={
+            <Image
+              aria-hidden
+              src="/globe.svg"
+              alt="Chat icon"
+              width={16}
+              height={16}
+            />
+          }
         >
           Go to Chat →
         </Button>

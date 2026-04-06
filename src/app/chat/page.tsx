@@ -1,28 +1,16 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import Box from "@mui/material/Box";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemText from "@mui/material/ListItemText";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import SendIcon from "@mui/icons-material/Send";
-import MenuIcon from "@mui/icons-material/Menu";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { ThemeToggle } from "@/view/components/theme-toggle";
-import Link from "next/link";
 
-const DRAWER_WIDTH = 240;
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import TextField from "@mui/material/TextField";
+import SendIcon from "@mui/icons-material/Send";
+
+import { PageShell } from "@/view/layouts/page-shell";
 
 export default function ChatPage() {
   const [input, setInput] = useState("");
-  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleSubmit = useCallback(() => {
     if (!input.trim()) return;
@@ -40,60 +28,8 @@ export default function ChatPage() {
     [handleSubmit]
   );
 
-  const toggleDrawer = useCallback(() => {
-    setDrawerOpen((prev) => !prev);
-  }, []);
-
-  const closeDrawer = useCallback(() => {
-    setDrawerOpen(false);
-  }, []);
-
-  const drawerContent = (
-    <Box sx={{ width: DRAWER_WIDTH }}>
-      <List>
-        <ListItem>
-          <IconButton component={Link} href="/" aria-label="back" sx={{ mr: 1 }}>
-            <ArrowBackIcon />
-          </IconButton>
-          <Typography variant="subtitle1">Chat AI</Typography>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={closeDrawer}>
-            <ListItemText primary="New Chat" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={closeDrawer}>
-            <ListItemText primary="History" />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={closeDrawer}>
-            <ListItemText primary="Settings" />
-          </ListItemButton>
-        </ListItem>
-      </List>
-    </Box>
-  );
-
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton color="inherit" onClick={toggleDrawer} edge="start" sx={{ mr: 2 }}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Chat
-          </Typography>
-          <ThemeToggle />
-        </Toolbar>
-      </AppBar>
-
-      <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer}>
-        {drawerContent}
-      </Drawer>
-
+    <PageShell title="Chat">
       <Box
         sx={{
           flex: 1,
@@ -123,7 +59,6 @@ export default function ChatPage() {
             },
           }}
         />
-
         <Box sx={{ alignSelf: "flex-end" }}>
           <IconButton
             onClick={handleSubmit}
@@ -141,6 +76,6 @@ export default function ChatPage() {
           </IconButton>
         </Box>
       </Box>
-    </Box>
+    </PageShell>
   );
 }

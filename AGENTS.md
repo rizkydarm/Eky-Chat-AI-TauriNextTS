@@ -119,6 +119,9 @@ Leave one blank line between groups. No blank lines inside groups.
 4.  **Check Existing Code**: Always grep / read existing files before writing new code. Follow existing patterns.
 5.  **No MCP Spam**: Never call MCP tools repeatedly for same information. Cache context locally.
 6.  **Batch Operations**: Make multiple tool calls in parallel whenever possible.
+9.  **No Terminal Spam**: Never use `cat`, `grep`, or other shell commands to read file contents. Use `read_file` and `grep` tools instead. Never repeat the same terminal command more than once.
+10. **Prefer edit_file over terminal**: Always use `edit_file` or `overwrite` mode to write files. Never use `printf`, `python3`, or shell redirection to write file contents.
+11. **Save before edit**: Always call `save_file` on files with unsaved changes before editing them.
 7.  **No CI/CD**: Do not setup CI/CD pipelines or deployment workflows.
 8.  **Minimize Output**: Keep text responses under 4 lines unless user asks for details.
 
@@ -134,6 +137,8 @@ Leave one blank line between groups. No blank lines inside groups.
 ❌ Never use abbreviations in identifiers
 ❌ Never generate documentation files
 ❌ Never run git commit / push commands
+❌ Never use `cat`, `printf`, or shell redirection to read or write files
+❌ Never repeat the same terminal command to verify something already confirmed
 
 ---
 

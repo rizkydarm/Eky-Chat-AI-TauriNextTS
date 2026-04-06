@@ -16,7 +16,7 @@ TypeScript Strict Rules
 
 State Management (MVVM)
 
-- ViewModels are Zustand stores placed in `shared/core/stores/`.
+- ViewModels are Zustand stores placed in `src/feature/stores/`.
 - Each store should have a small, focused state and actions.
 - Do not put business logic in React components; components only call actions from stores.
 - Example store:
@@ -49,7 +49,6 @@ Code Style (Enforced by ESLint + Prettier)
 - Run `pnpm lint --fix` before committing.
 
 Clean Code (SOLID & KISS)
-
 - Single Responsibility: Each function/component does one thing.
 - Open/Closed: Use composition over inheritance (React already encourages this).
 - Liskov Substitution: Not directly applicable but ensure props substitution works.
@@ -57,32 +56,5 @@ Clean Code (SOLID & KISS)
 - Dependency Inversion: High-level modules (ViewModels) depend on abstractions (repositories interfaces), not concrete SQL or API implementations.
 - KISS: Avoid complex patterns like render props or HOCs unless absolutely necessary. Prefer hooks.
 
-Example of Good Code (Without MCP Overuse)
-Instead of searching GitHub for a pattern, write based on known best practices:
-
-```ts
-// shared/core/stores/themeStore.ts
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-
-type ThemeMode = "light" | "dark";
-
-interface ThemeStore {
-  mode: ThemeMode;
-  toggle: () => void;
-}
-
-export const useThemeStore = create<ThemeStore>()(
-  persist(
-    (set) => ({
-      mode: "light",
-      toggle: () => set((state) => ({ mode: state.mode === "light" ? "dark" : "light" })),
-    }),
-    { name: "theme-storage" }
-  )
-);
-```
-
 Do Not Write Comments or JSDoc
-
 - The code must be self-documenting through clear naming and structure.
