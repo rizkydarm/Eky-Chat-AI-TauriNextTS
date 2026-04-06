@@ -1,9 +1,10 @@
 Eky Chat AI
 
 1. Project Overview
-Eky Chat AI is a cross-platform, frontend-only AI chat application designed to interface with multiple AI models and providers. Users configure their own API keys and endpoints to interact with various large language models through a unified, responsive interface. The application operates entirely on the client side, utilizing local databases for authentication, configuration, and chat session persistence.
+   Eky Chat AI is a cross-platform, frontend-only AI chat application designed to interface with multiple AI models and providers. Users configure their own API keys and endpoints to interact with various large language models through a unified, responsive interface. The application operates entirely on the client side, utilizing local databases for authentication, configuration, and chat session persistence.
 
 2. Key Features
+
 - Cross-platform: Web, Desktop (macOS), Mobile (iOS/Android)
 - Local-First Data: All chat histories, user settings, and authentication states are stored in a local SQLite database.
 - Chat sessions – Full CRUD operations for chat sessions organized in a sidebar.
@@ -26,20 +27,22 @@ Eky Chat AI is a cross-platform, frontend-only AI chat application designed to i
 - AI Integration: User provides their own API keys and endpoints; the app calls them directly from the browser/native runtime (no backend proxy).
 
 4. Architecture: MVVM (Model-View-ViewModel)
-Folder Structure (monorepo style)
+   Folder Structure (monorepo style)
 
 eky-chat-ai/
+
 - apps/
-  - web/                 
-  - native/              
+  - web/
+  - native/
 - shared/
-  - view/                # Pages, routes, reusable UI components (React)
-  - feature/             # Business logic, ViewModels, state stores (Zustand / Context)
-  - data/                # API clients, local storage adapters, SQL wrappers
-  - types/               # TypeScript interfaces, enums, global types
-  - themes/              # MUI theme configurations (light/dark)
+  - view/ # Pages, routes, reusable UI components (React)
+  - feature/ # Business logic, ViewModels, state stores (Zustand / Context)
+  - data/ # API clients, local storage adapters, SQL wrappers
+  - types/ # TypeScript interfaces, enums, global types
+  - themes/ # MUI theme configurations (light/dark)
 
 Detailed Architecture
+
 - View Layer (shared/view): Contains all React components, pages, and routes. Components are pure and receive data via props or hooks that inject ViewModels. No direct data access.
 - ViewModel Layer (shared/feature): Manages application state and business logic. Exposes observables (Zustand stores) and commands. ViewModels are UI-framework agnostic.
 - Model Layer (shared/data): Handles data persistence. Provides an abstraction over SQL (Tauri SQL plugin or sql.js) and AI provider API clients. The rest of the app never touches raw SQL or fetch calls directly.
@@ -72,26 +75,26 @@ The user interface of Eky Chat AI is heavily inspired by Open WebUI and ChatGPT 
    - Accessible from sidebar (gear icon). Opens as a modal. button is in bottom right of sidebar
    - Tabs or sections:
      a) General Settings
-        - Theme selection (light, dark, system).
-        - Language (if multi-language planned).
-        - Font size (slider).
-     b) AI Provider Configuration
-        - List of providers (OpenAI, Anthropic, Groq, Ollama, custom OpenAI-compatible).
-        - For each provider: API endpoint URL, API key (masked input), model name (dropdown or text).
-        - Test connection button.
-        - Default provider and model selection for new chats.
-     c) Chat Settings
-        - Default system prompt (text area).
-        - Temperature, max tokens, top_p (advanced expandable).
-        - Streaming enabled/disabled.
-     d) Data Management
-        - Export all sessions (JSON or SQLite export).
-        - Import sessions (from JSON).
-        - Clear all history (with confirmation).
-        - Database location (display only, for native apps).
-     e) About
-        - App version (from Tauri or package.json).
-        - Link to repository.
+     - Theme selection (light, dark, system).
+     - Language (if multi-language planned).
+     - Font size (slider).
+       b) AI Provider Configuration
+     - List of providers (OpenAI, Anthropic, Groq, Ollama, custom OpenAI-compatible).
+     - For each provider: API endpoint URL, API key (masked input), model name (dropdown or text).
+     - Test connection button.
+     - Default provider and model selection for new chats.
+       c) Chat Settings
+     - Default system prompt (text area).
+     - Temperature, max tokens, top_p (advanced expandable).
+     - Streaming enabled/disabled.
+       d) Data Management
+     - Export all sessions (JSON or SQLite export).
+     - Import sessions (from JSON).
+     - Clear all history (with confirmation).
+     - Database location (display only, for native apps).
+       e) About
+     - App version (from Tauri or package.json).
+     - Link to repository.
 
 4. Navigation Flow
    - Clicking "New Chat" creates a session and focuses on empty input.

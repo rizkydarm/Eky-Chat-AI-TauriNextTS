@@ -1,22 +1,11 @@
-import { dirname } from "node:path";
-import { fileURLToPath } from "node:url";
-import { FlatCompat } from "@eslint/eslintrc";
 import eslint from "@eslint/js";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import tseslint from "typescript-eslint";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
 export default tseslint.config(
   eslint.configs.recommended,
-  tseslint.configs.strictTypeChecked,
-  tseslint.configs.stylisticTypeChecked,
+  tseslint.configs.recommendedTypeChecked,
   react.configs.flat.recommended,
   react.configs.flat["jsx-runtime"],
   {
@@ -25,33 +14,23 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+      "@typescript-eslint/no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+      "@typescript-eslint/consistent-type-definitions": ["error", "type"],
+      "react/prop-types": "off",
     },
-  },
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-  {
     languageOptions: {
       parserOptions: {
         projectService: true,
         tsconfigRootDir: import.meta.dirname,
       },
     },
-  },
-  {
-    rules: {
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        { argsIgnorePattern: "^_" },
-      ],
-      "@typescript-eslint/consistent-type-definitions": ["error", "type"],
-      "react/prop-types": "off",
+    settings: {
+      react: {
+        version: "detect",
+      },
     },
   },
   {
-    ignores: [
-      "**/node_modules/**",
-      "**/dist/**",
-      "**/src-tauri/**",
-      "**/.next/**",
-    ],
+    ignores: ["**/node_modules/**", "**/dist/**", "**/src-tauri/**", "**/.next/**"],
   }
 );

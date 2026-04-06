@@ -4,15 +4,15 @@
   "version": "0.1.0",
   "identifier": "com.tauri.dev",
   "build": {
-    "beforeDevCommand": "pnpm dev:next",
+    "beforeDevCommand": "TAURI_ENV=true bun dev:next",
     "devUrl": "http://localhost:3000",
-    "beforeBuildCommand": "pnpm build:next",
+    "beforeBuildCommand": "TAURI_ENV=true bun build:next",
     "frontendDist": "../dist"
   },
   "app": {
     "windows": [
       {
-        "title": "tauri-nextjs-template",
+        "title": "Eky Chat AI",
         "width": 800,
         "height": 600,
         "resizable": true,

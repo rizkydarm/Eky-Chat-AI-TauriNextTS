@@ -1,29 +1,52 @@
 "use client";
-import { invoke } from "@tauri-apps/api/core";
+import Link from "next/link";
 import Image from "next/image";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function Home() {
   const [greeted, setGreeted] = useState<string | null>(null);
+  const [isTauri, setIsTauri] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  useEffect(() => {
+    setIsTauri(typeof window !== "undefined" && "__TAURI__" in window);
+  }, []);
+
   const greet = useCallback((): void => {
-    invoke<string>("greet")
-      .then((s) => {
-        setGreeted(s);
+    if (!isTauri) {
+      setSnackbarMessage("This feature is only available in the desktop app");
+      setSnackbarOpen(true);
+      return;
+    }
+    import("@tauri-apps/api/core")
+      .then(({ invoke }) => {
+        invoke<string>("greet")
+          .then((s) => setGreeted(s))
+          .catch((err: unknown) => {
+            setSnackbarMessage("Failed to call Rust function");
+            setSnackbarOpen(true);
+            console.error(err);
+          });
       })
       .catch((err: unknown) => {
+        setSnackbarMessage("Failed to load Tauri API");
+        setSnackbarOpen(true);
         console.error(err);
       });
-  }, []);
+  }, [isTauri]);
 
   return (
     <Box
       sx={{
         display: "grid",
-        gridTemplateRows: "20px 1fr 20px",
+        gridTemplateRows: "auto 1fr auto",
         alignItems: "center",
         justifyItems: "center",
         minHeight: "100vh",
@@ -31,6 +54,9 @@ export default function Home() {
         gap: 4,
       }}
     >
+      <Box sx={{ position: "absolute", top: 16, right: 16 }}>
+        <ThemeToggle />
+      </Box>
       <Box
         component="main"
         sx={{
@@ -51,8 +77,7 @@ export default function Home() {
         />
         <Box component="ol" sx={{ listStylePosition: "inside", pl: 2 }}>
           <Box component="li" sx={{ mb: 1 }}>
-            Get started by editing{" "}
-            <code>src/app/page.tsx</code>.
+            Get started by editing <code>src/app/page.tsx</code>.
           </Box>
           <Box component="li">Save and see your changes instantly.</Box>
         </Box>
@@ -66,6 +91,11 @@ export default function Home() {
           </Typography>
         </Box>
       </Box>
+      <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={() => setSnackbarOpen(false)} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+        <Alert severity="warning" onClose={() => setSnackbarOpen(false)}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       <Box
         component="footer"
         sx={{
@@ -82,15 +112,7 @@ export default function Home() {
           href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
-          startIcon={
-            <Image
-              aria-hidden
-              src="/file.svg"
-              alt="File icon"
-              width={16}
-              height={16}
-            />
-          }
+          startIcon={<Image aria-hidden src="/file.svg" alt="File icon" width={16} height={16} />}
         >
           Learn
         </Button>
@@ -100,33 +122,17 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
           startIcon={
-            <Image
-              aria-hidden
-              src="/window.svg"
-              alt="Window icon"
-              width={16}
-              height={16}
-            />
+            <Image aria-hidden src="/window.svg" alt="Window icon" width={16} height={16} />
           }
         >
           Examples
         </Button>
         <Button
-          component="a"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-          startIcon={
-            <Image
-              aria-hidden
-              src="/globe.svg"
-              alt="Globe icon"
-              width={16}
-              height={16}
-            />
-          }
+          component={Link}
+          href="/chat"
+          startIcon={<Image aria-hidden src="/globe.svg" alt="Chat icon" width={16} height={16} />}
         >
-          Go to nextjs.org →
+          Go to Chat →
         </Button>
       </Box>
     </Box>

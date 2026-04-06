@@ -1,10 +1,12 @@
 import type { NextConfig } from "next";
 
+const isTauri = process.env.TAURI_ENV === "true";
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  output: "export",
+  output: isTauri ? "export" : undefined,
   images: {
-    unoptimized: true,
+    unoptimized: isTauri,
   },
   distDir: "dist",
 };
