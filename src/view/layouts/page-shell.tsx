@@ -32,27 +32,16 @@ export function PageShell({ title, children }: PageShellProps) {
     >
       <AppBar position="static">
         <Toolbar>
-          <IconButton
-            color="inherit"
-            onClick={toggleDrawer}
-            edge="start"
-            sx={{ mr: 2 }}
-          >
+          <IconButton color="inherit" onClick={toggleDrawer} edge="start" sx={{ mr: 2 }}>
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            sx={{ flexGrow: 1 }}
-          >
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
           <ThemeToggle />
         </Toolbar>
       </AppBar>
-      <ChatDrawer
-        open={drawerOpen}
-        onClose={closeDrawer}
-      />
+      <ChatDrawer open={drawerOpen} onCloseAction={closeDrawer} />
       {children}
     </Box>
   );

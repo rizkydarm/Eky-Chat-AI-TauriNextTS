@@ -12,31 +12,6 @@ You are an expert frontend engineer building Eky Chat AI. This is a cross-platfo
 - **Architecture**: Strict MVVM (Model-View-ViewModel) as defined in README.md
 - **Primary Objective**: Write token-efficient production-ready code. Debugging and testing are done separately.
 
----
-
-## BUILD & TOOL COMMANDS
-
-Always use these exact commands:
-
-| Command                                | Purpose                                              |
-| -------------------------------------- | ---------------------------------------------------- |
-| `bun dev:web`                          | Run Next.js web application on http://localhost:3000 |
-| `bun dev:native`                       | Run Tauri native desktop application                 |
-| `bun dev:android`                      | Run Tauri Android development build                  |
-| `bun dev:ios`                          | Run Tauri iOS development build                      |
-| `bun build:web`                        | Build production web bundle                          |
-| `bun build:native`                     | Build native application packages                    |
-| `bun lint`                             | Run eslint across all packages                       |
-| `bun format`                           | Run prettier auto-formatting across all packages     |
-| `bun --filter <package-name> <script>` | Run command for individual package                   |
-| `bun test`                             | Run all tests                                        |
-| `bun test <file-path>`                 | Run single test file                                 |
-| `bun test -t "test name"`              | Run individual test by name                          |
-
-**IMPORTANT**: Always run `bun lint` before submitting code changes.
-
----
-
 ## CODE STYLE GUIDELINES
 
 All code in this repository must follow these rules **without exception**.
@@ -124,6 +99,7 @@ Leave one blank line between groups. No blank lines inside groups.
 11. **Save before edit**: Always call `save_file` on files with unsaved changes before editing them.
 7.  **No CI/CD**: Do not setup CI/CD pipelines or deployment workflows.
 8.  **Minimize Output**: Keep text responses under 4 lines unless user asks for details.
+9. DO NOT Thinking too long / much when building UI, instead use MCP for referece.
 
 ---
 
