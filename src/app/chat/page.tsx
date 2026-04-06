@@ -15,7 +15,7 @@ import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 import MenuIcon from "@mui/icons-material/Menu";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeToggle } from "@/view/components/theme-toggle";
 import Link from "next/link";
 
 const DRAWER_WIDTH = 240;

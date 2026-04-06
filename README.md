@@ -29,18 +29,6 @@ Eky Chat AI
 4. Architecture: MVVM (Model-View-ViewModel)
    Folder Structure (monorepo style)
 
-eky-chat-ai/
-
-- apps/
-  - web/
-  - native/
-- shared/
-  - view/ # Pages, routes, reusable UI components (React)
-  - feature/ # Business logic, ViewModels, state stores (Zustand / Context)
-  - data/ # API clients, local storage adapters, SQL wrappers
-  - types/ # TypeScript interfaces, enums, global types
-  - themes/ # MUI theme configurations (light/dark)
-
 Detailed Architecture
 
 - View Layer (shared/view): Contains all React components, pages, and routes. Components are pure and receive data via props or hooks that inject ViewModels. No direct data access.

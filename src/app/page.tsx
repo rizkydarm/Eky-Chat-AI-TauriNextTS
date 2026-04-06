@@ -7,7 +7,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemeToggle } from "@/view/components/theme-toggle";
 
 export default function Home() {
   const [greeted, setGreeted] = useState<string | null>(null);

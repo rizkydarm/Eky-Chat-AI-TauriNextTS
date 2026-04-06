@@ -81,9 +81,8 @@ Group imports in **exact** this order:
 
 1.  React / Next.js imports
 2.  Third party libraries (MUI, Tauri, etc.)
-3.  Absolute imports from packages (`@eky/core`, `@eky/ui`, etc.)
-4.  Relative imports from same directory
-5.  Styles and assets
+3.  Relative imports from same directory
+4.  Styles and assets
 
 Leave one blank line between groups. No blank lines inside groups.
 
@@ -97,16 +96,6 @@ Leave one blank line between groups. No blank lines inside groups.
 ---
 
 ## ARCHITECTURE RULES (MVVM)
-
-**Follow this layer separation strictly**:
-
-| Layer     | Location         | Responsibility                 | Allowed Dependencies           |
-| --------- | ---------------- | ------------------------------ | ------------------------------ |
-| View      | `packages/ui`    | React components only          | Can call ViewModel stores only |
-| ViewModel | `packages/core`  | Zustand stores, business logic | Can call Model layer only      |
-| Model     | `packages/db`    | Database access, API clients   | No external dependencies       |
-| Types     | `packages/types` | Shared interfaces, enums       | No dependencies at all         |
-
 ✅ ALLOWED: `UI -> ViewModel -> Model`
 ❌ FORBIDDEN: `UI -> Model`, `Model -> ViewModel`, cross layer imports
 
